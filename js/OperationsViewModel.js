@@ -364,6 +364,7 @@ function OperationsViewModel(miscViewModel, options, svgViewModel, materialViewM
     self.minY = ko.observable(0);
     self.maxX = ko.observable(0);
     self.maxY = ko.observable(0);
+    self.previewGcode = ko.observable(0);
 
     svgViewModel.pxPerInch.subscribe(function () {
         var ops = self.operations();

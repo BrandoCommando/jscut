@@ -151,6 +151,7 @@ ko.applyBindings(miscViewModel, $("#saveGcodeGoogle1")[0]);
 ko.applyBindings(miscViewModel, $("#openSvgGoogle1")[0]);
 ko.applyBindings(miscViewModel, $("#loadSettingsGoogle1")[0]);
 ko.applyBindings(miscViewModel, $("#openSvgDropbox1")[0]);
+ko.applyBindings(gcodeConversionViewModel, $("#gcodeBox")[0]);
 
 
 function updateSvgAutoHeight() {

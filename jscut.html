@@ -225,9 +225,9 @@ along with jscut.  If not, see <http://www.gnu.org/licenses/>.
                                     <div style="display: table-cell; width: 1px; padding-right: 5px; padding-left: 5px"><input id="opEnabled" type="checkbox" data-bind="checked: enabled" /></div>
                                     <div style="display: table-cell; width: 1px; padding-right: 5px">
                                         <select id="opOperation" data-bind="value: camOp">
-                                            <option>Pocket</option>
-                                            <option>Inside</option>
                                             <option>Outside</option>
+                                            <option>Inside</option>
+                                            <option>Pocket</option>
                                             <option>Engrave</option>
                                             <option>V Pocket</option>
                                         </select>
@@ -420,6 +420,9 @@ along with jscut.  If not, see <http://www.gnu.org/licenses/>.
                         <li>
                             <a href="#simulatePanel" data-toggle="tab">Simulate GCODE</a>
                         </li>
+                        <li>
+                            <a href="#previewPanel" data-toggle="tab">Preview GCODE</a>
+                        </li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="svgPanel">
@@ -438,6 +441,9 @@ along with jscut.  If not, see <http://www.gnu.org/licenses/>.
                                 <li>Use slider control to set simulation time</li>
                                 <li>Simulation remains blank until you generate toolpaths</li>
                             </ul>
+                        </div>
+                        <div class="tab-pane" id="previewPanel">
+                            <textarea id="gcodeBox" rows="40" cols="80" style="width:100%;height:100%" data-bind="text: gcode"></textarea>
                         </div>
                     </div>
                 </div>
