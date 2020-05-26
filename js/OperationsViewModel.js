@@ -105,7 +105,7 @@ function Operation(miscViewModel, options, svgViewModel, materialViewModel, oper
     self.enabled = ko.observable(true);
     self.ramp = ko.observable(false);
     self.combineOp = ko.observable("Union");
-    self.camOp = ko.observable("Pocket");
+    self.camOp = ko.observable("Outside");
     self.direction = ko.observable("Conventional");
     self.cutDepth = ko.observable(0);
     self.margin = ko.observable("0.0");
