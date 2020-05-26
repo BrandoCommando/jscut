@@ -178,6 +178,8 @@ jscut.cam = jscut.cam || {};
             "\r\n; Plunge rate:  " + tool.plungeRate * fromToolConv * toGcodeConv +
             "\r\n; Cut rate:     " + tool.cutRate * fromToolConv * toGcodeConv +
             "\r\n;\r\n";
+        
+        gcode += "M117 " + operation.name + "\r\n\r\n";
 
         gcode += jscut.priv.cam.getGcode({
             paths: camPaths,

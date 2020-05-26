@@ -371,12 +371,12 @@ jscut.priv.cam = jscut.priv.cam || {};
         var gcode = "";
 
         var retractGcode =
-            '; Retract\r\n' +
-            'G1 Z' + safeZ.toFixed(decimal) + rapidFeedGcode + '\r\n';
+            '; Retract\r\nG4 P250\r\nM05\r\n' +
+            'G1 Z' + safeZ.toFixed(decimal) + plungeFeedGcode + '\r\n';
 
         var retractForTabGcode =
             '; Retract for tab\r\n' +
-            'G1 Z' + tabZ.toFixed(decimal) + rapidFeedGcode + '\r\n';
+            'G1 Z' + tabZ.toFixed(decimal) + plungeFeedGcode + '\r\n';
 
         function getX(p) {
             return p.X * scale + offsetX;
@@ -393,7 +393,7 @@ jscut.priv.cam = jscut.priv.cam || {};
             return result;
         }
 
-        for (var pathIndex = 0; pathIndex < paths.length; ++pathIndex) {
+        for (var pathIndex = paths.length - 1; pathIndex >= 0; --pathIndex) {
             var path = paths[pathIndex];
             var origPath = path.path;
             if (origPath.length == 0)
@@ -402,7 +402,8 @@ jscut.priv.cam = jscut.priv.cam || {};
 
             gcode +=
                 '\r\n' +
-                '; Path ' + pathIndex + '\r\n';
+                '; Path ' + pathIndex + '\r\n' +
+                'M117 Path ' + (pathIndex + 1) + '/' + paths.length + '\r\n';
 
             var currentZ = safeZ;
             var finishedZ = topZ;
@@ -420,7 +421,7 @@ jscut.priv.cam = jscut.priv.cam || {};
                 gcode +=
                     '; Rapid to initial position\r\n' +
                     'G1' + convertPoint(origPath[0], false) + rapidFeedGcode + '\r\n' +
-                    'G1 Z' + currentZ.toFixed(decimal) + '\r\n';
+                    'G1 Z' + currentZ.toFixed(decimal) + plungeFeedGcode + '\r\n';
 
                 var selectedPaths;
                 if (nextZ >= tabZ || useZ)
@@ -470,8 +471,9 @@ jscut.priv.cam = jscut.priv.cam || {};
                             }
                             if (!executedRamp)
                                 gcode +=
-                                    '; plunge\r\n' +
-                                    'G1 Z' + selectedZ.toFixed(decimal) + plungeFeedGcode + '\r\n';
+                                    '; plunge\r\nM400\r\nM03\r\n' +
+                                    'G1 Z' + selectedZ.toFixed(decimal) + plungeFeedGcode + '\r\n' +
+                                    "G4 P250\r\n";
                         } else if (selectedZ > currentZ) {
                             gcode += retractForTabGcode;
                         }

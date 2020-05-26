@@ -23,7 +23,7 @@ function GcodeConversionViewModel(options, miscViewModel, materialViewModel, too
     self.units = ko.observable("mm");
     self.unitConverter = new UnitConverter(self.units);
     self.gcode = ko.observable("");
-    self.gcodeFilename = ko.observable("gcode.gcode");
+    self.gcodeFilename = ko.observable("jscut.gcode");
     self.offsetX = ko.observable(0);
     self.offsetY = ko.observable(0);
     self.returnTo00 = ko.observable(false);
@@ -115,7 +115,7 @@ function GcodeConversionViewModel(options, miscViewModel, materialViewModel, too
         else
             gcode += "G21         ; Set units to mm\r\n";
         gcode += "G90         ; Absolute positioning\r\n";
-        gcode += "G1 Z" + safeZ + " F" + rapidRate + "      ; Move to clearance level\r\n"
+        gcode += "G1 Z" + safeZ.toFixed(4) + " F" + plungeRate + "      ; Move to clearance level\r\n"
 
         for (var opIndex = 0; opIndex < ops.length; ++opIndex) {
             var op = ops[opIndex];
@@ -137,6 +137,8 @@ function GcodeConversionViewModel(options, miscViewModel, materialViewModel, too
                 "\r\n; Plunge rate:  " + plungeRate +
                 "\r\n; Cut rate:     " + cutRate +
                 "\r\n;\r\n";
+                
+            gcode += "M117 " + (op.name() || ("Op #" + opIndex + ": " + op.camOp())) + "\r\n\r\n";
 
             gcode += jscut.priv.cam.getGcode({
                 paths:          op.toolPaths(),
